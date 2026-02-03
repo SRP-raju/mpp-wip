@@ -76,10 +76,10 @@ finetune: &finetune
   group: 'debugging'
   pretrained_ckpt_path: 'final/pretrain/pretrain_on-MPP_lr-X_opt-adan_wd-4_ns-16/training_checkpoints/ckpt.tar'
   train_data_paths: [
-              ['/lustre/scratch5/exempt/artimis/mpmm/spandit/data/mpp_finetune/cx241203_fp16_full_finetune_train', 'clx_npz', ''],
+              ['/lustre/scratch5/exempt/artimis/mpmm/spandit/finetune/cx241203_fp16_full_finetune_train', 'clx_npz', ''],
               ]
   valid_data_paths: [  # These are the same for all configs - uses split according to train_val_test
-              ['/lustre/scratch5/exempt/artimis/mpmm/spandit/data/mpp_finetune/cx241203_fp16_full_finetune_train', 'clx_npz', ''],
+              ['/lustre/scratch5/exempt/artimis/mpmm/spandit/finetune/cx241203_fp16_full_finetune_train', 'clx_npz', ''],
               ]
   embedding_offset: 12 # Number of fields in original model - FT fields start after this
   freeze_middle: !!bool False # Whether to freeze the middle layers of the model
