@@ -18,7 +18,7 @@ basic_config: &basic_config
   group: 'debugging'
   entity: 'entity'
   # Training settings
-  drop_path: 0.1
+  drop_path: 0.125
   batch_size: 1
   max_epochs: 3000
   scheduler_epochs: -1
@@ -74,7 +74,7 @@ finetune: &finetune
   accum_grad: 1
   pretrained: !!bool True
   group: 'debugging'
-  pretrained_ckpt_path: 'final/pretrain_pdebenchpart/pretrain_on-MPP_lr-X_opt-adan_wd-4_ns-06/training_checkpoints/ckpt.tar'
+  pretrained_ckpt_path: 'final/pretrain_pdebenchfull/basic_config/final_L_pretrain-pdebenchfull_lr-X_opt-adan_wd-3_ns-06/training_checkpoints/best_ckpt.tar'
   train_data_paths: [
               ['/lustre/scratch5/exempt/artimis/mpmm/spandit/finetune/cx241203_fp16_full_finetune_train', 'clx_npz', ''],
               ]

@@ -18,7 +18,7 @@ basic_config: &basic_config
   group: 'debugging'
   entity: 'entity'
   # Training settings
-  drop_path: 0.1
+  drop_path: 0.125
   batch_size: 1
   max_epochs: 3000
   scheduler_epochs: -1
@@ -78,7 +78,7 @@ finetune: &finetune
   accum_grad: 1
   pretrained: !!bool True
   group: 'debugging'
-  pretrained_ckpt_path: 'final/pretrain_pdebenchfull/pretrain_on-MPP_lr-X_opt-adan_wd-4_ns-06/training_checkpoints/ckpt.tar'
+  pretrained_ckpt_path: 'final/pretrain_pdebenchfull/basic_config/final_L_pretrain-pdebenchfull_lr-X_opt-adan_wd-3_ns-06/training_checkpoints/best_ckpt.tar'
   train_data_paths: [
               ['/lustre/scratch5/exempt/artimis/mpmm/spandit/finetune/lsc240420_fp16_full_finetune_train', 'lsc_npz', ''],
               ]
@@ -94,11 +94,11 @@ finetune: &finetune
 finetune_resume: &finetune_resume
   <<: *finetune
 
-  # Resume finetuning from the last finetune checkpoint (training_checkpoints/ckpt.tar) in the run directory.
-  # IMPORTANT: use the SAME --run_name as the prior finetune run so ckpt.tar exists and resuming=True.
+  # Resume finetuning from the last finetune checkpoint (training_checkpoints/best_ckpt.tar) in the run directory.
+  # IMPORTANT: use the SAME --run_name as the prior finetune run so best_ckpt.tar exists and resuming=True.
 
   n_states: 20  # 12 (pretrain) + 8 (LSC appended fields) after expansion in the initial finetune run
-  pretrained: !!bool False  # prevent falling back to the 12-state pretrained_ckpt_path if ckpt.tar is missing
+  pretrained: !!bool False  # prevent falling back to the 12-state pretrained_ckpt_path if best_ckpt.tar is missing
   append_datasets: []  # already expanded in the initial finetune run; avoid expanding twice on resume
 
 
