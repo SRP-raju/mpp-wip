@@ -16,3 +16,4 @@ final
 out*.log
 *grid*.pdf
 *grid*.png
+*.csv

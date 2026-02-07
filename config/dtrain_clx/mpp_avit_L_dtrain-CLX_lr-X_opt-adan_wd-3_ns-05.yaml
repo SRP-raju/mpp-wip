@@ -3,7 +3,7 @@ basic_config: &basic_config
   log_to_wandb: !!bool False # Use wandb integration
   log_to_screen: !!bool True # Log progress to screen.
   save_checkpoint: !!bool True # Save checkpoints
-  checkpoint_save_interval: 5 # Save every # epochs - also saves "best" according to val loss
+  checkpoint_save_interval: 20 # Save every # epochs - also saves "best" according to val loss
   debug_grad: !!bool True # Compute gradient/step_sizes/ect for debugging
   true_time: !!bool False # Debugging setting - sets num workers to zero and activates syncs
   num_data_workers: 6 # Generally pulling 8 cpu per process, so using 6 for DL - not sure if best ratio
@@ -18,23 +18,23 @@ basic_config: &basic_config
   group: 'debugging'
   entity: 'entity'
   # Training settings
-  drop_path: 0.05
+  drop_path: 0.2
   batch_size: 1
   max_epochs: 3000
   scheduler_epochs: -1
-  epoch_size: 2000 # Artificial epoch size
+  epoch_size: 1000 # Artificial epoch size
   rescale_gradients: !!bool False # Activate hook that scales block gradients to norm 1
   optimizer: 'adan' # adam, adan, whatever else i end up adding - adan did better on HP sweep
   scheduler: 'cosine' # Only cosine implemented
   warmup_steps: 1000 # Warmup when not using DAdapt
   learning_rate: -1 # -1 means use DAdapt
-  weight_decay: 1e-5
+  weight_decay: 1e-4
   n_states: 12   # Number of state variables across the datasets - Can be larger than real number and things will just go unused
   state_names: ['Pressure', 'Vx', 'Vy', 'Density',  'Vx', 'Vy', 'Density', 'Pressure'] # Should be sorted
   dt: 1 # Striding of data - Not currently implemented > 1
   n_steps: 5 # Length of history to include in input
   enforce_max_steps: !!bool False # If false and n_steps > dataset steps, use dataset steps. Otherwise, raise Exception.
-  accum_grad: 12  # Real batch size is accum * batch_size, real steps/"epoch" is epoch_size / accum
+  accum_grad: 5  # Real batch size is accum * batch_size, real steps/"epoch" is epoch_size / accum
   # Model settings
   model_type: 'avit' # Only option so far
   block_type: 'axial' # Which type of block to use - if axial, next two fields must be set to define axial ops
@@ -87,7 +87,7 @@ finetune_resume: &finetune_resume
   # Resume finetuning from the last finetune checkpoint (training_checkpoints/ckpt.tar) in the run directory.
   # IMPORTANT: use the SAME --run_name as the prior finetune run so ckpt.tar exists and resuming=True.
 
-  n_states: 20  # 12 (pretrain) + 8 (CLX appended fields) after expansion in the initial finetune run
+  n_states: 20  # 12 (pretrain) + 8 (Finetune data appended fields) after expansion in the initial finetune run
   pretrained: !!bool False  # prevent falling back to the 12-state pretrained_ckpt_path if ckpt.tar is missing
   append_datasets: []  # already expanded in the initial finetune run; avoid expanding twice on resume
 
